@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Copy from https://www.calculatorsoup.com/calculators/math/basic.php -->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
+</head>
+<body>
+  <div class="white-area" >
+<div class="large-flex-box">
+  <div class="grey-box">
+    <div 
+    style = 
+    "margin-bottom: 15px;
+    font-weight: bold;
+    font-size:20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;">
+    Basic Calculator
+    </div>
+    <div class="flex-box">
+      <input id="result-box" value="0" type="text-box">
+    </div>
+    <div class="grid-box">
+        <button class="grey" value="clear" onclick="memory(value)">
+          mc
+        </button>
+        <button class="grey" value="recall" onclick="memory(value)">
+          mr
+        </button>
+        <button class="grey" value="-" onclick="memory(value)">
+          m-
+        </button>
+        <button class="grey" value="+" onclick="memory(value)">
+          m+
+        </button>
+        <button class="grey"  id="ACorCEbutton" onclick="deleteEntry()">
+          AC
+        </button>
+        <button class="grey" value="squareRoot" onclick="manipulateNumber(value)">
+          &#x221Ax
+        </button>
+        <button class="grey" value="percentage" onclick="manipulateNumber(value)">
+          &#x25
+        </button>
+        <button class="orange bold" value="/" onclick="enterSymbol(value)">
+          &#xf7
+        </button>
+        <button class="white bold" value="7" onclick="enterNumber(value)">
+          7
+        </button>
+        <button class="white bold" value="8" onclick="enterNumber(value)">
+          8
+        </button>
+        <button class="white bold" value="9" onclick="enterNumber(value)">
+          9
+        </button>
+        <button class="orange bold" value="*" onclick="enterSymbol(value)">
+          &#xd7
+        </button>
+        <button class="white bold" value="4" onclick="enterNumber(value)">
+          4
+        </button>
+        <button class="white bold" value="5" onclick="enterNumber(value)">
+          5
+        </button>
+        <button class="white bold" value="6" onclick="enterNumber(value)">
+          6
+        </button>
+        <button class="orange bold" value="-" onclick="enterSymbol(value)">
+          &#x2212
+        </button>
+        <button class="white bold" value="1" onclick="enterNumber(value)">
+          1
+        </button>
+        <button class="white bold" value="2" onclick="enterNumber(value)">
+          2
+        </button>
+        <button class="white bold" value="3" onclick="enterNumber(value)">
+          3
+        </button>
+        <button class="orange bold" value="+" onclick="enterSymbol(value)">
+          &#x2b
+        </button>
+        <button class="white bold" value="0" onclick="enterNumber(value)">
+          0
+        </button>
+        <button class="white bold" value="." onclick="enterNumber(value)">
+          .
+        </button>
+        <button class="white bold" value="negate" onclick="manipulateNumber(value)">
+          +/-
+        </button>
+        <button class="orange bold" value="sequence" onclick="manipulateNumber(value)">
+          !
+        </button>
+        <button class="grey" value="pi" onclick="manipulateNumber(value)">
+          π
+        </button>
+        <button class="grey" value="x**2" onclick="manipulateNumber(value)">
+          x<sup>2</sup>
+        </button>
+        <button class="grey" value="x**n" onclick="manipulateNumber(value)">
+          x<sup>n</sup>
+        </button>
+        <button class="orange bold" value="=" onclick="enterSymbol(value)">
+          &#x3d
+        </button>
+    </div>
+    <div class="outro-text-area">
+      <a class="outro-text" href="">Get a Widget for this Calculator</a>
+    </div>
+  </div>
+  <div class="calculator-desc">
+    <p class="bold" style="font-size: 20px;">Calculator Use</p>
+    <p>This is a simple basic calculator with memory functions similar to a small handheld calculator. Use this basic calculator online for math with addition, subtraction, division and multiplication. Memory and clear functions for this standard calculator are listed below.</p>  
+      <ul>
+        <li class="bold">
+        mc = Memory Clear
+        </li>
+        <li class="bold">
+        mc&#x2b = Memory Plus
+        </li>
+        <li class="bold">
+        mc&#x2212 = Memory Minus
+          </li>
+          <li class="bold">
+            mr = Memory Recall
+            </li>          
+            <li class="bold">
+              CE = Clear Previous Entry
+              </li>
+              <li class="bold">
+                AC = All Clear
+                </li>                      
+              <li class="bold">
+                &#x221Ax = Square Root
+                </li>
+                  <li class="bold">
+                    π = Pi constant
+                    </li>
+                    <li class="bold">                 
+                      +/- = Plus/minus
+                      </li>
+                      <li class="bold">
+                        x<sup>2</sup> = Multiply a number by itself 1 time
+                        </li>
+                        <li class="bold">
+                          x<sup>n</sup> = Multiply a number by itself n times
+                          </li>
+                          <li class="bold">
+                            ! = Sequence of numbers
+                            </li>
+                          <li class="bold">
+                            &#x25 = Percent
+                            </li>
+      </ul>
+      <p>
+        The calculator memory is at 0 until you hit <i>mc&#x2b</i> or <i>mc&#x2212</i>. Each time you hit <i>mc&#x2b</i> the number on the display is added to the number in the calculator memory. Each time you hit <i>mc&#x2212</i> the number on the display is subtracted from the number in the calculator memory. To recall the number in the calculator memory hit <i>mr</i>. To zero out the memory hit <i>mc</i>.
+      </p>
+  </div>
+</div>
+<p>Use <i>AC</i> to clear out the current calculation. Use <i>CE</i> to clear out the most recent entry. Note that if the <i>AC</i> key is not visible, hit <i>CE</i> and then <i>AC</i> to clear out your calculation.</p>
+<p>To view a web page containing only this calculator see 
+  <a class="underline-blue" href="">
+    The Online Calculator</a> 
+    at <a class="underline-blue" href="">
+      https://www.theonlinecalculator.com</a>.
+  </p>
+  <p>If you need to see a running total and tape history of your calculations use our <a class="underline-blue" href="">Adding Machine Calculator</a>.
+  </p>
+  </div>
+
+</body>
+</html>
