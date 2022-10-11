@@ -1,2 +1,2 @@
 # Simple-Calculator
-A simple interactive calculator which behaves similarly with a already popular simple online calculator
+A simple interactive calculator which looks and behaves similarly with the following online calculator https://www.calculatorsoup.com/calculators/math/basic.php
