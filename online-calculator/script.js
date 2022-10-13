@@ -7,29 +7,12 @@ let mathExpression={
   result:"",
 };
 
-function enterNumber(numberToEnter)
-{
+const enterNumber=(numberToEnter)=>{
+
   let Box=document.getElementById("result-box");
   if (mathExpression.operator=="" && mathExpression.result=="")
   { 
-    if (Box.value=="0" && numberToEnter=="0")
-    {
-      Box.value="0";
-      mathExpression.number1="0";
-    } 
-    else if (Box.value=="0" && numberToEnter!=".")
-    {
-      Box.value=numberToEnter;
-      mathExpression.number1=Box.value;
-    }
-    else
-    {
-    //Adds the number to the end of the Box
-    Box.value+=numberToEnter;
-
-    //Assigns box value to number1
-    mathExpression.number1=Box.value;
-    }
+    mathExpression.number1=numberRendering(numberToEnter,mathExpression.number1)
   }
   else if (mathExpression.operator!="" && mathExpression.result=="")
   {
@@ -37,95 +20,59 @@ function enterNumber(numberToEnter)
     {
       Box.value="";
     }
-
-    if (Box.value=="0" && numberToEnter=="0")
-    {
-      Box.value="0";
-      mathExpression.number2="0";
-    } 
-    else if (Box.value=="0" && numberToEnter!=".")
-    {
-      Box.value=numberToEnter;
-      mathExpression.number2=Box.value;
-    }
-    else
-    {
-    //Adds the number to the end of the Box
-    Box.value+=numberToEnter;
-
-    //Assigns box value to number1
-    mathExpression.number2=Box.value;
-    }
+    mathExpression.number2=numberRendering(numberToEnter,mathExpression.number2)
   }
   else if (mathExpression.operator=="" && mathExpression.result!="")
   { 
     Box.value="";
     mathExpression.result="";
-    if (Box.value=="0" && numberToEnter=="0")
-    {
-      Box.value="0";
-      mathExpression.number1="0";
-    } 
-    else if (Box.value=="0" && numberToEnter!=".")
-    {
-      Box.value=numberToEnter;
-      mathExpression.number1=Box.value;
-    }
-    else
-    {
-    //Adds the number to the end of the Box
-    Box.value+=numberToEnter;
-
-    //Assigns box value to number1
-    mathExpression.number1=Box.value;
-    }
-  } else if (mathExpression.operator!="" && mathExpression.result!="")
+    mathExpression.number1=numberRendering(numberToEnter,mathExpression.number1)
+  }
+  else if (mathExpression.operator!="" && mathExpression.result!="")
   {
-
     if (mathExpression.number1!="" && mathExpression.number2=="")
     {
       Box.value="";
     }
-
-    if (Box.value=="0" && numberToEnter=="0")
-    {
-      Box.value="0";
-      mathExpression.number2="0";
-    } 
-    else if (Box.value=="0" && numberToEnter!=".")
-    {
-      Box.value=numberToEnter;
-      mathExpression.number2=Box.value;
-    }
-    else
-    {
-    //Adds the number to the end of the Box
-    Box.value+=numberToEnter;
-
-    //Assigns box value to number1
-    mathExpression.number2=Box.value;
-    }
+    mathExpression.number2=numberRendering(numberToEnter,mathExpression.number2)
   }
 
   changeToCE();
-
   console.log(mathExpression);
 }
 
-function floatPointNumberPrecisionProblem(number) {
+const numberRendering=(numberToEnter,number1or2)=>{
+  let Box=document.getElementById("result-box");
+
+  if (Box.value=="0" && numberToEnter=="0")
+  {
+    Box.value="0";
+    number1or2="0";
+  } 
+  else if (Box.value=="0" && numberToEnter!=".")
+  {
+    Box.value=numberToEnter;
+    number1or2=Box.value;
+  }
+  else
+  {
+  //Adds the number to the end of the Box
+  Box.value+=numberToEnter;
+
+  //Assigns box value to number1
+  number1or2=Box.value;
+  }
+
+  return number1or2;
+}
+
+const floatPointNumberPrecisionProblem=(number)=>{
   return (parseFloat(number).toPrecision(15));
 }
 
-function enterSymbol(operation)
-{
-if (operation=="=")
-{
-  //Calculating the result
-  mathExpression.result=mathExpression.number1+mathExpression.operator+mathExpression.number2;
-  mathExpression.result=eval(mathExpression.result);
-
-  //Dealing with precision problems considering floating point numbers
-  if (Number.isInteger(Number(mathExpression.number1))==false || Number.isInteger(Number(mathExpression.number2))==false)  {
+const precisionProblemFloatingPointNumbers=(number1,number2)=>{
+  if (Number.isInteger(Number(number1))==false || Number.isInteger(Number(number2))==false)
+  {
     //Calculating the decimal result with 12 digit precision
     mathExpression.result=floatPointNumberPrecisionProblem(mathExpression.result);
 
@@ -145,8 +92,20 @@ if (operation=="=")
     for (i=0;i<=mathExpression.result.length-1;i++)
     {finalResult+=mathExpression.result[i]}
 
-    mathExpression.result=finalResult;
+    return finalResult;
   }
+}
+
+const enterSymbol=(operation)=>{
+
+if (operation=="=")
+{
+  //Calculating the result
+  mathExpression.result=mathExpression.number1+mathExpression.operator+mathExpression.number2;
+  mathExpression.result=eval(mathExpression.result);
+
+  //Dealing with precision problems considering floating point numbers
+  mathExpression.result=precisionProblemFloatingPointNumbers(mathExpression.number1,mathExpression.number2)
 
   //Rendering the result in the Box
   Box=document.getElementById("result-box");
@@ -165,29 +124,8 @@ else if (mathExpression.number1!="" && mathExpression.number2!="")
   mathExpression.result=eval(mathExpression.result);
 
   //Dealing with precision problems considering floating point numbers
-  if (Number.isInteger(Number(mathExpression.number1))==false || Number.isInteger(Number(mathExpression.number2))==false)
-  {
-    //Calculating the decimal result with 12 digit precision
-    mathExpression.result=floatPointNumberPrecisionProblem(mathExpression.result);
+  mathExpression.result=precisionProblemFloatingPointNumbers(mathExpression.number1,mathExpression.number2);
 
-    //Splitting the number
-    mathExpression.result=mathExpression.result.split("");
-
-    let dotFound=false;
-    for (i=mathExpression.result.length-1;dotFound==false;i--)
-    {
-      if (mathExpression.result[i]=="0")
-      {mathExpression.result.pop();}
-      else
-      {dotFound=true;}
-    }
-
-    let finalResult="";
-    for (i=0;i<=mathExpression.result.length-1;i++)
-    {finalResult+=mathExpression.result[i]}
-
-    mathExpression.result=finalResult;
-  }
   //Rendering the result in the Box
   Box=document.getElementById("result-box");
   Box.value=mathExpression.result;
@@ -221,7 +159,7 @@ if (operation!="=")
 console.log(mathExpression)
 }
 
-function manipulateNumber(manipulation){
+const manipulateNumber=(manipulation)=>{
   let Box=document.getElementById("result-box");
 
   if (manipulation=="x**n")
@@ -263,7 +201,8 @@ function manipulateNumber(manipulation){
         currentProduct=currentProduct*i;
       }
         if (mathExpression.operator=="")
-          { Box.value=currentProduct.toString();
+          { 
+            Box.value=currentProduct.toString();
             mathExpression.number1=Box.value;
           }
         else if (mathExpression.operator!="")
@@ -275,7 +214,8 @@ function manipulateNumber(manipulation){
     else if (Isinteger==true && BoxValue==0)
     {
       if (mathExpression.operator=="")
-          { Box.value="1";
+          { 
+            Box.value="1";
             mathExpression.number1=Box.value;
           }
         else if (mathExpression.operator!="")
@@ -286,7 +226,8 @@ function manipulateNumber(manipulation){
     } 
     else
     {
-      
+      alert("Please enter a positive integer");
+      Box.value="";
     } 
   }
 
@@ -302,19 +243,19 @@ function manipulateNumber(manipulation){
 
 }
 
-function changeToAC(){
+const changeToAC=()=>{
   let ACorCEButton=document.getElementById("ACorCEbutton");
   ACorCEButton.innerText="AC";
   ACorCEButton.value="AC";
 }
 
-function changeToCE(){
+const changeToCE=()=>{
   let ACorCEButton=document.getElementById("ACorCEbutton");
   ACorCEButton.innerText="CE";
   ACorCEButton.value="CE";  
 }
 
-function deleteEntry(){
+const deleteEntry=()=>{
   let Box=document.getElementById("result-box");
   let ACorCEButton=document.getElementById("ACorCEbutton");
 
@@ -391,7 +332,7 @@ console.log(mathExpression);
 }
 
 let memoryNumber=0;
-function memory(action){
+const memory=(action)=>{
   let Box=document.getElementById("result-box");
   if (action=="+")
   {
@@ -418,9 +359,5 @@ function memory(action){
     memoryNumber=0;
   }
   console.log(mathExpression);
-  console.log("memory number is:",memoryNumber);
+  console.log(`memory number is: ${memoryNumber}`);
 }
-
-
-
-
