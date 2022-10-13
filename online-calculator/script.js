@@ -70,9 +70,7 @@ const floatPointNumberPrecisionProblem=(number)=>{
   return (parseFloat(number).toPrecision(15));
 }
 
-const precisionProblemFloatingPointNumbers=(number1,number2)=>{
-  if (Number.isInteger(Number(number1))==false || Number.isInteger(Number(number2))==false)
-  {
+const precisionProblemFloatingPointNumbers=()=>{
     //Calculating the decimal result with 12 digit precision
     mathExpression.result=floatPointNumberPrecisionProblem(mathExpression.result);
 
@@ -92,9 +90,12 @@ const precisionProblemFloatingPointNumbers=(number1,number2)=>{
     for (i=0;i<=mathExpression.result.length-1;i++)
     {finalResult+=mathExpression.result[i]}
 
+    //Rendering the result in the Box
+    Box=document.getElementById("result-box");
+    Box.value=finalResult;
+
     return finalResult;
   }
-}
 
 const enterSymbol=(operation)=>{
 
@@ -105,17 +106,21 @@ if (operation=="=")
   mathExpression.result=eval(mathExpression.result);
 
   //Dealing with precision problems considering floating point numbers
-  mathExpression.result=precisionProblemFloatingPointNumbers(mathExpression.number1,mathExpression.number2)
+  if (Number.isInteger(Number(mathExpression.number1))==false || Number.isInteger(Number(mathExpression.number2))==false)
+  {
+    mathExpression.result=precisionProblemFloatingPointNumbers()
+  }
+  else
+  {
+    //Rendering the result in the Box
+    Box=document.getElementById("result-box");
+    Box.value=mathExpression.result;
+  }
 
-  //Rendering the result in the Box
-  Box=document.getElementById("result-box");
-  Box.value=mathExpression.result;
-  
   //Assigning empty to number1,number2,operator
   mathExpression.number1="";
   mathExpression.number2="";
   mathExpression.operator="";
-
 }
 else if (mathExpression.number1!="" && mathExpression.number2!="")
 {
@@ -124,21 +129,25 @@ else if (mathExpression.number1!="" && mathExpression.number2!="")
   mathExpression.result=eval(mathExpression.result);
 
   //Dealing with precision problems considering floating point numbers
-  mathExpression.result=precisionProblemFloatingPointNumbers(mathExpression.number1,mathExpression.number2);
+  if (Number.isInteger(Number(mathExpression.number1))==false || Number.isInteger(Number(mathExpression.number2))==false)
+  {
+    mathExpression.result=precisionProblemFloatingPointNumbers()
+  }
+  else
+  {
+    //Rendering the result in the Box
+    Box=document.getElementById("result-box");
+    Box.value=mathExpression.result;
 
-  //Rendering the result in the Box
-  Box=document.getElementById("result-box");
-  Box.value=mathExpression.result;
+    //Assigning the result to number1
+    mathExpression.number1=mathExpression.result.toString();
 
-  //Assigning the result to number1
-  mathExpression.number1=mathExpression.result.toString();
+    //Assigning the new operator to operator
+    mathExpression.operator=operation;
 
-  //Assigning the new operator to operator
-  mathExpression.operator=operation;
-
-  //Assigning number2 to empty
-  mathExpression.number2="";
-
+    //Assigning number2 to empty
+    mathExpression.number2="";
+  }
 }
 else if (mathExpression.number1=="" && mathExpression.operator=="" && mathExpression.number2=="" && mathExpression.result!="")
 {
@@ -228,6 +237,7 @@ const manipulateNumber=(manipulation)=>{
     {
       alert("Please enter a positive integer");
       Box.value="";
+      mathExpression.result="";
     } 
   }
 
