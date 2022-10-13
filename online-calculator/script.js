@@ -83,8 +83,13 @@ const precisionProblemFloatingPointNumbers=()=>{
       if (mathExpression.result[i]=="0")
       {mathExpression.result.pop();}
       else
-      {dotFound=true;}
+      {
+        dotFound=true;
+      }
     }
+
+    if (mathExpression.result[mathExpression.result.length-1]==".")
+    {mathExpression.result.pop();}
 
     let finalResult="";
     for (i=0;i<=mathExpression.result.length-1;i++)
@@ -151,9 +156,10 @@ else if (mathExpression.number1!="" && mathExpression.number2!="")
 }
 else if (mathExpression.number1=="" && mathExpression.operator=="" && mathExpression.number2=="" && mathExpression.result!="")
 {
-  mathExpression.number1=mathExpression.result.toString();
-  mathExpression.operator=operation;
-  mathExpression.result="";
+
+    mathExpression.number1=mathExpression.result.toString();
+    mathExpression.operator=operation;
+    mathExpression.result="";
 }
 else
 {
@@ -286,8 +292,6 @@ else if (ACorCEButton.value=="CE")
         {
           mathExpression.number1="";
           Box.value="";
-          changeToAC();
-          //console.log("if 1")
         }
   else if( mathExpression.number1!=""
        && mathExpression.operator!=""
@@ -295,8 +299,6 @@ else if (ACorCEButton.value=="CE")
        && mathExpression.result=="")
         {
           mathExpression.operator="";
-          changeToAC();
-          //console.log("if 2")
         }
   else if( mathExpression.number1!=""
        && mathExpression.operator!=""
@@ -305,8 +307,6 @@ else if (ACorCEButton.value=="CE")
         {
           mathExpression.number2="";
           Box.value="";
-          changeToAC();
-          //console.log("if 3")
         }
   else if( mathExpression.number1==""
         && mathExpression.operator==""
@@ -315,8 +315,6 @@ else if (ACorCEButton.value=="CE")
           {
             mathExpression.result="";
             Box.value="";
-            changeToAC();
-            //console.log("if 4")
           }
   else if(  mathExpression.number1!=""
          && mathExpression.operator!=""
@@ -324,8 +322,6 @@ else if (ACorCEButton.value=="CE")
          && mathExpression.result!="")
           {  
             mathExpression.operator="";
-            changeToAC();
-            //console.log("if 5")
           }
           else if(  mathExpression.number1!=""
          && mathExpression.operator!=""
@@ -334,9 +330,9 @@ else if (ACorCEButton.value=="CE")
           {  
             mathExpression.number2="";
             Box.value="";
-            changeToAC();
-            //console.log("if 6")
           }
+
+          changeToAC();
 }
 console.log(mathExpression);
 }
