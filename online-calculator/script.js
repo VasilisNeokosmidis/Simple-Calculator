@@ -70,7 +70,8 @@ const floatPointNumberPrecisionProblem=(number)=>{
   return (parseFloat(number).toPrecision(15));
 }
 
-const precisionProblemFloatingPointNumbers=()=>{
+const precisionProblemFloatingPointNumbers=(number1,number2)=>{
+  
     //Calculating the decimal result with 12 digit precision
     mathExpression.result=floatPointNumberPrecisionProblem(mathExpression.result);
 
@@ -83,21 +84,12 @@ const precisionProblemFloatingPointNumbers=()=>{
       if (mathExpression.result[i]=="0")
       {mathExpression.result.pop();}
       else
-      {
-        dotFound=true;
-      }
+      {dotFound=true;}
     }
-
-    if (mathExpression.result[mathExpression.result.length-1]==".")
-    {mathExpression.result.pop();}
 
     let finalResult="";
     for (i=0;i<=mathExpression.result.length-1;i++)
     {finalResult+=mathExpression.result[i]}
-
-    //Rendering the result in the Box
-    Box=document.getElementById("result-box");
-    Box.value=finalResult;
 
     return finalResult;
   }
@@ -113,19 +105,18 @@ if (operation=="=")
   //Dealing with precision problems considering floating point numbers
   if (Number.isInteger(Number(mathExpression.number1))==false || Number.isInteger(Number(mathExpression.number2))==false)
   {
-    mathExpression.result=precisionProblemFloatingPointNumbers()
+    mathExpression.result=precisionProblemFloatingPointNumbers(mathExpression.number1,mathExpression.number2)
   }
-  else
-  {
-    //Rendering the result in the Box
-    Box=document.getElementById("result-box");
-    Box.value=mathExpression.result;
-  }
-
+  
+  //Rendering the result in the Box
+  Box=document.getElementById("result-box");
+  Box.value=mathExpression.result;
+  
   //Assigning empty to number1,number2,operator
   mathExpression.number1="";
   mathExpression.number2="";
   mathExpression.operator="";
+
 }
 else if (mathExpression.number1!="" && mathExpression.number2!="")
 {
@@ -136,30 +127,28 @@ else if (mathExpression.number1!="" && mathExpression.number2!="")
   //Dealing with precision problems considering floating point numbers
   if (Number.isInteger(Number(mathExpression.number1))==false || Number.isInteger(Number(mathExpression.number2))==false)
   {
-    mathExpression.result=precisionProblemFloatingPointNumbers()
+    mathExpression.result=precisionProblemFloatingPointNumbers(mathExpression.number1,mathExpression.number2);
   }
-  else
-  {
-    //Rendering the result in the Box
-    Box=document.getElementById("result-box");
-    Box.value=mathExpression.result;
 
-    //Assigning the result to number1
-    mathExpression.number1=mathExpression.result.toString();
+  //Rendering the result in the Box
+  Box=document.getElementById("result-box");
+  Box.value=mathExpression.result;
 
-    //Assigning the new operator to operator
-    mathExpression.operator=operation;
+  //Assigning the result to number1
+  mathExpression.number1=mathExpression.result.toString();
 
-    //Assigning number2 to empty
-    mathExpression.number2="";
-  }
+  //Assigning the new operator to operator
+  mathExpression.operator=operation;
+
+  //Assigning number2 to empty
+  mathExpression.number2="";
+
 }
 else if (mathExpression.number1=="" && mathExpression.operator=="" && mathExpression.number2=="" && mathExpression.result!="")
 {
-
-    mathExpression.number1=mathExpression.result.toString();
-    mathExpression.operator=operation;
-    mathExpression.result="";
+  mathExpression.number1=mathExpression.result.toString();
+  mathExpression.operator=operation;
+  mathExpression.result="";
 }
 else
 {
@@ -243,7 +232,6 @@ const manipulateNumber=(manipulation)=>{
     {
       alert("Please enter a positive integer");
       Box.value="";
-      mathExpression.result="";
     } 
   }
 
@@ -292,6 +280,8 @@ else if (ACorCEButton.value=="CE")
         {
           mathExpression.number1="";
           Box.value="";
+          changeToAC();
+          //console.log("if 1")
         }
   else if( mathExpression.number1!=""
        && mathExpression.operator!=""
@@ -299,6 +289,8 @@ else if (ACorCEButton.value=="CE")
        && mathExpression.result=="")
         {
           mathExpression.operator="";
+          changeToAC();
+          //console.log("if 2")
         }
   else if( mathExpression.number1!=""
        && mathExpression.operator!=""
@@ -307,6 +299,8 @@ else if (ACorCEButton.value=="CE")
         {
           mathExpression.number2="";
           Box.value="";
+          changeToAC();
+          //console.log("if 3")
         }
   else if( mathExpression.number1==""
         && mathExpression.operator==""
@@ -315,6 +309,8 @@ else if (ACorCEButton.value=="CE")
           {
             mathExpression.result="";
             Box.value="";
+            changeToAC();
+            //console.log("if 4")
           }
   else if(  mathExpression.number1!=""
          && mathExpression.operator!=""
@@ -322,6 +318,8 @@ else if (ACorCEButton.value=="CE")
          && mathExpression.result!="")
           {  
             mathExpression.operator="";
+            changeToAC();
+            //console.log("if 5")
           }
           else if(  mathExpression.number1!=""
          && mathExpression.operator!=""
@@ -330,9 +328,9 @@ else if (ACorCEButton.value=="CE")
           {  
             mathExpression.number2="";
             Box.value="";
+            changeToAC();
+            //console.log("if 6")
           }
-
-          changeToAC();
 }
 console.log(mathExpression);
 }
